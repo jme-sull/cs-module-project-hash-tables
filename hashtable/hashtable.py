@@ -137,7 +137,7 @@ class HashTable:
             difference = new_capacity - len(self.storage) 
             self.storage.append()
             for x in self.storage:
-                self.djb2(x.key)
+                self.djb2(x.key) #small change
             return self.storage
         else:
             return ("I dont know how to make it smaller!")
