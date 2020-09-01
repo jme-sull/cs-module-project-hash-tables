@@ -95,6 +95,7 @@ class HashTable:
             last_node.next = new_node
         else:
             self.storage[bucket_index] = new_node
+    
 
     def delete(self, key):
         key_hash = self.djb2(key)
@@ -111,6 +112,7 @@ class HashTable:
                         self.storage[bucket_index] = existing_node.next
                 last_node = existing_node
                 existing_node = existing_node.next
+               
         else:
             print("Not found!")
 
@@ -121,26 +123,24 @@ class HashTable:
         key_hash = self.djb2(key)
         bucket_index = key_hash % self.capacity
 
-        existing_node = self.storage[bucket_index]
+        existing_node = self.storage[bucket_index] #if this is true do the next stuff 
         if existing_node:
-            while existing_node:
-                if existing_node.key == key:
+            while existing_node: #while loop looks through the linked list 
+                if existing_node.key == key: #if a key match is found, return the value
                     return existing_node.value
-                existing_node = existing_node.next
+                existing_node = existing_node.next #if not, look at the next node 
 
         return None
 
 
     def resize(self, new_capacity):
-        if new_capacity >= self.capacity:
-            self.capacity = new_capacity
-            difference = new_capacity - len(self.storage) 
-            self.storage.append()
-            for x in self.storage:
-                self.djb2(x.key) #small change
-            return self.storage
-        else:
-            return ("I dont know how to make it smaller!")
+        old_array = self.storage
+        self.storage = [None] * new_capacity
+        for i in range(len(old_array)):
+            current_node = old_array[i]
+            while current_node:
+                self.put(current_node.key, current_node.value)
+                current_node = current_node.next 
 
 
 if __name__ == "__main__":
