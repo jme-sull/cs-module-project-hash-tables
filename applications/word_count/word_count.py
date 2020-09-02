@@ -1,7 +1,9 @@
+import re
+
 def word_count(s):
-    # Your code here
-
-
+    string_array = s.lower().split() #just need to remove the characters 
+    d = {i:string_array.count(i) for i in string_array}
+    return d
 
 if __name__ == "__main__":
     print(word_count(""))
